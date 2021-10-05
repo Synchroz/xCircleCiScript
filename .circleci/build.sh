@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
 git clone --depth=1 https://github.com/Synchroz/Santoni-4.9-synchroz santoni
-git clone --depth=1 https://github.com/radcolor/aarch64-linux-gnu gcc
+git clone --depth=1 https://github.com/mvaisakh/gcc-build gcc
 
 # Main
 KERNEL_NAME=Sirius # IMPORTANT ! Declare your kernel name
