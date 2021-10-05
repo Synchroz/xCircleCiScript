@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
 git clone --depth=1 https://github.com/Synchroz/Santoni-4.9-synchroz santoni
-git clone --depth=1 https://github.com/xyz-prjkt/xRageTC-clang clang
+git clone --depth=1 https://github.com/radcolor/aarch64-linux-gnu gcc
 
 # Main
 KERNEL_NAME=Sirius # IMPORTANT ! Declare your kernel name
 KERNEL_ROOTDIR=$(pwd)/santoni # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_CODENAME=santoni # IMPORTANT ! Declare your device codename
 DEVICE_DEFCONFIG=santoni_defconfig # IMPORTANT ! Declare your kernel source defconfig file here.
-CLANG_ROOTDIR=$(pwd)/clang # IMPORTANT! Put your clang directory here.
+GCC_ROOTDIR=$(pwd)/gcc # IMPORTANT! Put your clang directory here.
 export KBUILD_BUILD_USER=Synchroz # Change with your own name or else.
 export KBUILD_BUILD_HOST=Bloodedge # Change with your own hostname.
 IMAGE=$(pwd)/santoni/out/arch/arm64/boot/Image.gz-dtb
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
-PATH="${PATH}:${CLANG_ROOTDIR}/bin"
+PATH="${PATH}:${GCC_ROOTDIR}/bin"
 
 # Checking environtment
 # Warning !! Dont Change anything there without known reason.
@@ -26,8 +26,8 @@ echo ================================================
 echo BUILDER NAME = ${KBUILD_BUILD_USER}
 echo BUILDER HOSTNAME = ${KBUILD_BUILD_HOST}
 echo DEVICE_DEFCONFIG = ${DEVICE_DEFCONFIG}
-echo CLANG_VERSION = $(${CLANG_ROOTDIR}/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
-echo CLANG_ROOTDIR = ${CLANG_ROOTDIR}
+echo GCC_VERSION = $(${GCC_ROOTDIR}/bin/gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
+echo GCC_ROOTDIR = ${GCC_ROOTDIR}
 echo KERNEL_ROOTDIR = ${KERNEL_ROOTDIR}
 echo ================================================
 }
@@ -40,14 +40,14 @@ function compile() {
         -d chat_id="-1001567409765" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="<b>xKernelCompiler</b>%0ABUILDER NAME : <code>${KBUILD_BUILD_USER}</code>%0ABUILDER HOST : <code>${KBUILD_BUILD_HOST}</code>%0ADEVICE DEFCONFIG : <code>${DEVICE_DEFCONFIG}</code>%0ACLANG VERSION : <code>$(${CLANG_ROOTDIR}/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0ACLANG ROOTDIR : <code>${CLANG_ROOTDIR}</code>%0AKERNEL ROOTDIR : <code>${KERNEL_ROOTDIR}</code>"
+        -d text="<b>xKernelCompiler</b>%0ABUILDER NAME : <code>${KBUILD_BUILD_USER}</code>%0ABUILDER HOST : <code>${KBUILD_BUILD_HOST}</code>%0ADEVICE DEFCONFIG : <code>${DEVICE_DEFCONFIG}</code>%0AGCC VERSION : <code>$(${GCC_ROOTDIR}/bin/gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AGCC ROOTDIR : <code>${GCC_ROOTDIR}</code>%0AKERNEL ROOTDIR : <code>${KERNEL_ROOTDIR}</code>"
 
   cd ${KERNEL_ROOTDIR}
   make -j$(nproc) O=out ARCH=arm64 ${DEVICE_DEFCONFIG}
   make -j$(nproc) ARCH=arm64 O=out \
-	CC=${CLANG_ROOTDIR}/bin/clang \
-	CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
-	CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-
+	LD=${GCC_ROOTDIR}/bin/gcc \
+	CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-linux-gnu- \
+	CROSS_COMPILE_ARM32=${GCC_ROOTDIR}/bin/arm-linux-gnueabi-
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
