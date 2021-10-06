@@ -1,20 +1,23 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
 git clone --depth=1 https://github.com/Synchroz/Santoni-4.9-synchroz santoni
-git clone --depth=1 https://github.com/mvaisakh/gcc-build gcc
+git clone https://github.com/theradcolor/aarch64-linux-gnu --depth=1 gcc
+$ git clone https://github.com/theradcolor/arm-linux-gnueabi --depth=1 gcc32
 
 # Main
 KERNEL_NAME=Sirius # IMPORTANT ! Declare your kernel name
 KERNEL_ROOTDIR=$(pwd)/santoni # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_CODENAME=santoni # IMPORTANT ! Declare your device codename
 DEVICE_DEFCONFIG=santoni_defconfig # IMPORTANT ! Declare your kernel source defconfig file here.
-GCC_ROOTDIR=$(pwd)/gcc # IMPORTANT! Put your clang directory here.
+GCC_ROOTDIR=$(pwd)/gcc # IMPORTANT! Put your gcc directory here.
+GCC32_ROOTDIR=$(pwd)/gcc32 # IMPORTANT ! Put your gcc32 directory here
 export KBUILD_BUILD_USER=Synchroz # Change with your own name or else.
 export KBUILD_BUILD_HOST=Bloodedge # Change with your own hostname.
 IMAGE=$(pwd)/santoni/out/arch/arm64/boot/Image.gz-dtb
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
 PATH="${PATH}:${GCC_ROOTDIR}/bin"
+PATH32="${PATH}:${GCC32_ROOTDIR}/bin"
 
 # Checking environtment
 # Warning !! Dont Change anything there without known reason.
