@@ -2,7 +2,7 @@
 echo "Downloading few Dependecies . . ."
 git clone --depth=1 https://github.com/Synchroz/Santoni-4.9-synchroz santoni
 git clone https://github.com/theradcolor/aarch64-linux-gnu --depth=1 gcc
-$ git clone https://github.com/theradcolor/arm-linux-gnueabi --depth=1 gcc32
+git clone https://github.com/theradcolor/arm-linux-gnueabi --depth=1 gcc32
 
 # Main
 KERNEL_NAME=Sirius # IMPORTANT ! Declare your kernel name
@@ -29,7 +29,7 @@ echo ================================================
 echo BUILDER NAME = ${KBUILD_BUILD_USER}
 echo BUILDER HOSTNAME = ${KBUILD_BUILD_HOST}
 echo DEVICE_DEFCONFIG = ${DEVICE_DEFCONFIG}
-echo GCC_VERSION = $(${GCC_ROOTDIR}/bin/gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
+echo GCC_VERSION = $(${GCC_ROOTDIR}/bin/aarch64-linux-gnu-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
 echo GCC_ROOTDIR = ${GCC_ROOTDIR}
 echo KERNEL_ROOTDIR = ${KERNEL_ROOTDIR}
 echo ================================================
@@ -48,9 +48,9 @@ function compile() {
   cd ${KERNEL_ROOTDIR}
   make -j$(nproc) O=out ARCH=arm64 ${DEVICE_DEFCONFIG}
   make -j$(nproc) ARCH=arm64 O=out \
-	LD=${GCC_ROOTDIR}/bin/gcc \
+	LD=${GCC_ROOTDIR}/bin/aarch64-linux-gnu-ld \
 	CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-linux-gnu- \
-	CROSS_COMPILE_ARM32=${GCC_ROOTDIR}/bin/arm-linux-gnueabi-
+	CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-linux-gnueabi-
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
