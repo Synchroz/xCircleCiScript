@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
-git clone --depth=1 https://github.com/Synchroz/Santoni-4.9-synchroz santoni
+git clone --depth=1 https://github.com/Synchroz/kernel_xiaomi_santoni-4.9 santoni
 git clone https://github.com/theradcolor/aarch64-linux-gnu --depth=1 gcc
 git clone https://github.com/theradcolor/arm-linux-gnueabi --depth=1 gcc32
 
