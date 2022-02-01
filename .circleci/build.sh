@@ -5,7 +5,7 @@ git clone https://github.com/Sepatu-Bot/arm64-gcc --depth=1 gcc
 git clone https://github.com/Sepatu-Bot/gcc-arm --depth=1 gcc32
 
 # Main
-KERNEL_NAME=Sirius # IMPORTANT ! Declare your kernel name
+KERNEL_NAME=Auguri # IMPORTANT ! Declare your kernel name
 KERNEL_ROOTDIR=$(pwd)/santoni # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_CODENAME=santoni # IMPORTANT ! Declare your device codename
 DEVICE_DEFCONFIG=santoni_defconfig # IMPORTANT ! Declare your kernel source defconfig file here.
@@ -45,7 +45,7 @@ function compile() {
         -d chat_id="-1001567409765" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="<b>xKernelCompiler</b>%0ABUILDER NAME : <code>${KBUILD_BUILD_USER}</code>%0ABUILDER HOST : <code>${KBUILD_BUILD_HOST}</code>%0ADEVICE DEFCONFIG : <code>${DEVICE_DEFCONFIG}</code>%0AGCC VERSION : <code>$(${GCC_ROOTDIR}/bin/aarch64-linux-gnu-gcc-12.0.0 --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AGCC ROOTDIR : <code>${GCC_ROOTDIR}</code>%0AKERNEL ROOTDIR : <code>${KERNEL_ROOTDIR}</code>"
+        -d text="<b>xKernelCompiler</b>%0ABUILDER NAME : <code>${KBUILD_BUILD_USER}</code>%0ABUILDER HOST : <code>${KBUILD_BUILD_HOST}</code>%0ADEVICE DEFCONFIG : <code>${DEVICE_DEFCONFIG}</code>%0AGCC VERSION : <code>$(${GCC_ROOTDIR}/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AGCC ROOTDIR : <code>${GCC_ROOTDIR}</code>%0AKERNEL ROOTDIR : <code>${KERNEL_ROOTDIR}</code>"
 
   cd ${KERNEL_ROOTDIR}
   export KERNEL_USE_CCACHE=1
