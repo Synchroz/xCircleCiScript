@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
 git clone --depth=1 https://github.com/Synchroz/kernel_xiaomi_santoni-4.9 santoni
-git clone https://github.com/theradcolor/aarch64-linux-gnu --depth=1 gcc
-git clone https://github.com/theradcolor/arm-linux-gnueabi --depth=1 gcc32
+git clone https://github.com/Sepatu-Bot/arm64-gcc --depth=1 gcc
+git clone https://github.com/Sepatu-Bot/gcc-arm --depth=1 gcc32
 
 # Main
 KERNEL_NAME=Sirius # IMPORTANT ! Declare your kernel name
@@ -10,7 +10,7 @@ KERNEL_ROOTDIR=$(pwd)/santoni # IMPORTANT ! Fill with your kernel source root di
 DEVICE_CODENAME=santoni # IMPORTANT ! Declare your device codename
 DEVICE_DEFCONFIG=santoni_defconfig # IMPORTANT ! Declare your kernel source defconfig file here.
 GCC_ROOTDIR=$(pwd)/gcc # IMPORTANT! Put your gcc directory here.
-GCC32_ROOTDIR=$(pwd)/gcc32 # IMPORTANT ! Put your gcc32 directory here
+GCC32_ROOTDIR=$(pwd)/gcc32 # IMPORTANT! Put your gcc32 directory here.
 export KBUILD_BUILD_USER=Synchroz # Change with your own name or else.
 export KBUILD_BUILD_HOST=Bloodedge # Change with your own hostname.
 IMAGE=$(pwd)/santoni/out/arch/arm64/boot/Image.gz-dtb
@@ -29,7 +29,9 @@ echo ================================================
 echo BUILDER NAME = ${KBUILD_BUILD_USER}
 echo BUILDER HOSTNAME = ${KBUILD_BUILD_HOST}
 echo DEVICE_DEFCONFIG = ${DEVICE_DEFCONFIG}
-echo GCC_VERSION = $(${GCC_ROOTDIR}/bin/aarch64-linux-gnu-gcc-12.0.0 --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
+echo GCC_VERSION = $(${GCC_ROOTDIR}/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
+echo GCC32_VERSION = $(${GCC32_ROOTDIR}//bin/arm-eabi-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
+echo LLD_VERSION = $(${GCC_ROOTDIR}/bin/ld.lld --version | head -n 1)
 echo GCC_ROOTDIR = ${GCC_ROOTDIR}
 echo KERNEL_ROOTDIR = ${KERNEL_ROOTDIR}
 echo ================================================
@@ -46,11 +48,14 @@ function compile() {
         -d text="<b>xKernelCompiler</b>%0ABUILDER NAME : <code>${KBUILD_BUILD_USER}</code>%0ABUILDER HOST : <code>${KBUILD_BUILD_HOST}</code>%0ADEVICE DEFCONFIG : <code>${DEVICE_DEFCONFIG}</code>%0AGCC VERSION : <code>$(${GCC_ROOTDIR}/bin/aarch64-linux-gnu-gcc-12.0.0 --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AGCC ROOTDIR : <code>${GCC_ROOTDIR}</code>%0AKERNEL ROOTDIR : <code>${KERNEL_ROOTDIR}</code>"
 
   cd ${KERNEL_ROOTDIR}
-  make -j$(nproc) O=out ARCH=arm64 ${DEVICE_DEFCONFIG}
-  make -j$(nproc) ARCH=arm64 O=out \
-	LD=${GCC_ROOTDIR}/bin/aarch64-linux-gnu-ld \
-	CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-linux-gnu- \
-	CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-linux-gnueabi-
+  export KERNEL_USE_CCACHE=1
+  make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 ${DEVICE_DEFCONFIG}
+  make -j$(nproc --all) ARCH=arm64 SUBARCH=arm64 O=out \
+    CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-elf- \
+    CROSS_COMPILE_ARM32=${GCC_ROOTDIR32}/bin/arm-eabi- \
+    AR=${GCC_ROOTDIR}/bin/aarch64-elf-ar \
+    OBJDUMP=${GCC_ROOTDIR}/bin/aarch64-elf-objdump \
+    STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
