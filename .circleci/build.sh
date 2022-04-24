@@ -54,8 +54,17 @@ function compile() {
     CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-elf- \
     CROSS_COMPILE_ARM32=${GCC_ROOTDIR32}/bin/arm-eabi- \
     AR=${GCC_ROOTDIR}/bin/aarch64-elf-ar \
+    AS=${GCC_ROOTDIR}/bin/aarch64-elf-as \
+#   NM=${GCC_ROOTDIR}/bin/aarch64-elf-nm \
+#    NM=${GCC_ROOTDIR}/bin/llvm-nm \
+    CC=${GCC_ROOTDIR}/bin/aarch64-elf-gcc \
+#   OBJCOPY=${GCC_ROOTDIR}/bin/aarch64-elf-objcopy \
+#    OBJCOPY=${GCC_ROOTDIR}/bin/llvm-objcopy \
     OBJDUMP=${GCC_ROOTDIR}/bin/aarch64-elf-objdump \
-    STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip
+    OBJSIZE=${GCC_ROOTDIR}/bin/aarch64-elf-size \
+    READELF=${GCC_ROOTDIR}/bin/aarch64-elf-readelf \
+    STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip \
+    LD=${GCC_ROOTDIR}/bin/aarch64-elf-ld.lld
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
