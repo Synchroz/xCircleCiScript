@@ -53,8 +53,9 @@ function compile() {
   make -j$(nproc) ARCH=arm64 O=out \
     AR=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-ar \
     AS=${GCC_ROOTDIR}/bin/aarch64-elf-as \
-    NM=${GCC_ROOTDIR}/bin/aarch64-elf-nm \
+    NM=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-nm \
 #    NM=${GCC_ROOTDIR}/bin/llvm-nm \
+    RANLIB=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-ranlib \
     CC=${GCC_ROOTDIR}/bin/aarch64-elf-gcc \
     OBJCOPY=${GCC_ROOTDIR}/bin/aarch64-elf-objcopy \
 #    OBJCOPY=${GCC_ROOTDIR}/bin/llvm-objcopy \
@@ -62,7 +63,7 @@ function compile() {
     STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip \
     LD=${GCC_ROOTDIR}/bin/aarch64-elf-ld.lld \
     CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-elf- \
-    CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
+    CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi-
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
