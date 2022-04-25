@@ -48,9 +48,8 @@ function compile() {
         -d text="<b>xKernelCompiler</b>%0ABUILDER NAME : <code>${KBUILD_BUILD_USER}</code>%0ABUILDER HOST : <code>${KBUILD_BUILD_HOST}</code>%0ADEVICE DEFCONFIG : <code>${DEVICE_DEFCONFIG}</code>%0AGCC VERSION : <code>$(${GCC_ROOTDIR}/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AGCC ROOTDIR : <code>${GCC_ROOTDIR}</code>%0AKERNEL ROOTDIR : <code>${KERNEL_ROOTDIR}</code>"
 
   cd ${KERNEL_ROOTDIR}
-  export KERNEL_USE_CCACHE=1
-  make -j$(nproc --all) O=out ARCH=arm64 SUBARCH=arm64 ${DEVICE_DEFCONFIG}
-  make -j$(nproc --all) ARCH=arm64 SUBARCH=arm64 O=out \
+  make -j$(nproc) O=out ARCH=arm64 ${DEVICE_DEFCONFIG}
+  make -j$(nproc) ARCH=arm64 O=out \
     CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-elf- \
     CROSS_COMPILE_ARM32=${GCC_ROOTDIR32}/bin/arm-eabi- \
     AR=${GCC_ROOTDIR}/bin/aarch64-elf-ar \
