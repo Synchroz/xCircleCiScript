@@ -19,8 +19,7 @@ COMPILER_STRING="$GCC_VERSION with $LLD_VERSION"
 IMAGE=$(pwd)/santoni/out/arch/arm64/boot/Image.gz-dtb
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
-PATH="${PATH}:${GCC_ROOTDIR}/bin"
-PATH32="${PATH}:${GCC32_ROOTDIR}/bin"
+PATH="${GCC_ROOTDIR}/bin/:${GCC32_ROOTDIR}/bin/:/usr/bin:${PATH}"
 
 # Checking environtment
 # Warning !! Dont Change anything there without known reason.
@@ -48,25 +47,23 @@ function compile() {
         -d chat_id="-1001567409765" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="<b>xKernelCompiler</b>%0ABUILDER NAME : <code>${KBUILD_BUILD_USER}</code>%0ABUILDER HOST : <code>${KBUILD_BUILD_HOST}</code>%0ADEVICE DEFCONFIG : <code>${DEVICE_DEFCONFIG}</code>%0AGCC VERSION : <code>$(${GCC_ROOTDIR}/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AGCC ROOTDIR : <code>${GCC_ROOTDIR}</code>%0AKERNEL ROOTDIR : <code>${KERNEL_ROOTDIR}</code>"
+        -d text="<b>xKernelCompiler</b>%0ABUILDER NAME : <code>${KBUILD_BUILD_USER}</code>%0ABUILDER HOST : <code>${KBUILD_BUILD_HOST}</code>%0ADEVICE DEFCONFIG : <code>${DEVICE_DEFCONFIG}</code>%0AGCC VERSION : <code>${COMPILER_STRING}</code>"
 
   cd ${KERNEL_ROOTDIR}
   make -j$(nproc) O=out ARCH=arm64 ${DEVICE_DEFCONFIG}
   make -j$(nproc) ARCH=arm64 O=out \
-    CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-elf- \
-    CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
     AR=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-ar \
     AS=${GCC_ROOTDIR}/bin/aarch64-elf-as \
-    NM=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-nm \
+    NM=${GCC_ROOTDIR}/bin/aarch64-elf-nm \
 #    NM=${GCC_ROOTDIR}/bin/llvm-nm \
     CC=${GCC_ROOTDIR}/bin/aarch64-elf-gcc \
-   OBJCOPY=${GCC_ROOTDIR}/bin/aarch64-elf-objcopy \
+    OBJCOPY=${GCC_ROOTDIR}/bin/aarch64-elf-objcopy \
 #    OBJCOPY=${GCC_ROOTDIR}/bin/llvm-objcopy \
     OBJDUMP=${GCC_ROOTDIR}/bin/aarch64-elf-objdump \
-    OBJSIZE=${GCC_ROOTDIR}/bin/aarch64-elf-size \
-    READELF=${GCC_ROOTDIR}/bin/aarch64-elf-readelf \
     STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip \
     LD=${GCC_ROOTDIR}/bin/aarch64-elf-ld.lld
+    CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-elf- \
+    CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
