@@ -55,12 +55,13 @@ function compile() {
   make -j$(nproc) ARCH=arm64 O=out \
     CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-elf- \
     CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
-    AR=${GCC_ROOTDIR}/bin/aarch64-elf-ar \
+    AR=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-ar \
     AS=${GCC_ROOTDIR}/bin/aarch64-elf-as \
-#   NM=${GCC_ROOTDIR}/bin/aarch64-elf-nm \
+    RANLIB=${GCC_ROOTDIR}/aarch64-elf-gcc-ranlib \
+    NM=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-nm \
 #    NM=${GCC_ROOTDIR}/bin/llvm-nm \
     CC=${GCC_ROOTDIR}/bin/aarch64-elf-gcc \
-#   OBJCOPY=${GCC_ROOTDIR}/bin/aarch64-elf-objcopy \
+   OBJCOPY=${GCC_ROOTDIR}/bin/aarch64-elf-objcopy \
 #    OBJCOPY=${GCC_ROOTDIR}/bin/llvm-objcopy \
     OBJDUMP=${GCC_ROOTDIR}/bin/aarch64-elf-objdump \
     OBJSIZE=${GCC_ROOTDIR}/bin/aarch64-elf-size \
