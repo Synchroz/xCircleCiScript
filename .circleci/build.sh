@@ -13,6 +13,9 @@ GCC_ROOTDIR=$(pwd)/gcc # IMPORTANT! Put your gcc directory here.
 GCC32_ROOTDIR=$(pwd)/gcc32 # IMPORTANT! Put your gcc32 directory here.
 export KBUILD_BUILD_USER=Synchroz # Change with your own name or else.
 export KBUILD_BUILD_HOST=Bloodedge # Change with your own hostname.
+GCC_VERSION = $(${GCC_ROOTDIR}/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
+LLD_VERSION="$("$GCC_ROOTDIR"/bin/aarch64-elf-ld.lld --version | head -n 1)"
+COMPILER_STRING="$GCC_VERSION with $LLD_VERSION"
 IMAGE=$(pwd)/santoni/out/arch/arm64/boot/Image.gz-dtb
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
@@ -51,7 +54,7 @@ function compile() {
   make -j$(nproc) O=out ARCH=arm64 ${DEVICE_DEFCONFIG}
   make -j$(nproc) ARCH=arm64 O=out \
     CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-elf- \
-    CROSS_COMPILE_ARM32=${GCC_ROOTDIR32}/bin/arm-eabi- \
+    CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
     AR=${GCC_ROOTDIR}/bin/aarch64-elf-ar \
     AS=${GCC_ROOTDIR}/bin/aarch64-elf-as \
 #   NM=${GCC_ROOTDIR}/bin/aarch64-elf-nm \
