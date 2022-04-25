@@ -13,7 +13,6 @@ GCC_ROOTDIR=$(pwd)/gcc # IMPORTANT! Put your gcc directory here.
 GCC32_ROOTDIR=$(pwd)/gcc32 # IMPORTANT! Put your gcc32 directory here.
 export KBUILD_BUILD_USER=Synchroz # Change with your own name or else.
 export KBUILD_BUILD_HOST=Bloodedge # Change with your own hostname.
-GCC_VERSION = $(${GCC_ROOTDIR}/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
 LLD_VERSION="$("$GCC_ROOTDIR"/bin/aarch64-elf-ld.lld --version | head -n 1)"
 COMPILER_STRING="$GCC_VERSION with $LLD_VERSION"
 IMAGE=$(pwd)/santoni/out/arch/arm64/boot/Image.gz-dtb
@@ -61,7 +60,7 @@ function compile() {
 #    OBJCOPY=${GCC_ROOTDIR}/bin/llvm-objcopy \
     OBJDUMP=${GCC_ROOTDIR}/bin/aarch64-elf-objdump \
     STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip \
-    LD=${GCC_ROOTDIR}/bin/aarch64-elf-ld.lld
+    LD=${GCC_ROOTDIR}/bin/aarch64-elf-ld.lld \
     CROSS_COMPILE=${GCC_ROOTDIR}/bin/aarch64-elf- \
     CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
 
