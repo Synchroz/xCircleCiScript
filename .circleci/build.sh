@@ -84,7 +84,7 @@ function push() {
         -F chat_id="-1001567409765" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
-        -F caption="Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>Xiaomi Redmi 4X (santoni)</b> | <b>$(${GCC_ROOTDIR}/bin/aarch64-linux-gnu-gcc-13.0.0 --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</b>"
+        -F caption="Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>Xiaomi Redmi 4X (santoni)</b> | <b>$(${GCC_ROOTDIR}/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</b>"
 
 }
 # Fin Error
@@ -100,7 +100,7 @@ function finerr() {
 # Zipping
 function zipping() {
     cd AnyKernel || exit 1
-    zip -r9 ${KERNEL_NAME}-4.9-${DEVICE_CODENAME}-${DATE}-${GCC_VERSION}.zip *
+    zip -r9 ${KERNEL_NAME}-4,9-${DEVICE_CODENAME}-${DATE}-GCC13.zip *
     cd ..
 }
 check
