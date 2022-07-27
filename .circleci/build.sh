@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
 git clone --depth=1 https://github.com/Synchroz/Kernel-Auguri-12L santoni
-git clone https://github.com/mvaisakh/gcc-arm64 --depth=1 gcc
-git clone https://github.com/mvaisakh/gcc-arm --depth=1 gcc32
+git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 -b gcc-master gcc
+git clone --depth=1 https://github.com/mvaisakh/gcc-arm -b gcc-master gcc32
 
 # Main
 KERNEL_NAME=Auguri # IMPORTANT ! Declare your kernel name
