@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
-git clone --depth=1 https://github.com/Synchroz/kernel_xiaomi_santoni-4.9 santoni
+git clone --depth=1 https://github.com/Synchroz/Kernel-Auguri-12L santoni
 git clone https://github.com/mvaisakh/gcc-arm64 --depth=1 gcc
 git clone https://github.com/mvaisakh/gcc-arm --depth=1 gcc32
 
@@ -8,7 +8,7 @@ git clone https://github.com/mvaisakh/gcc-arm --depth=1 gcc32
 KERNEL_NAME=Auguri # IMPORTANT ! Declare your kernel name
 KERNEL_ROOTDIR=$(pwd)/santoni # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_CODENAME=santoni # IMPORTANT ! Declare your device codename
-DEVICE_DEFCONFIG=santoni_defconfig # IMPORTANT ! Declare your kernel source defconfig file here.
+DEVICE_DEFCONFIG=santoni_treble_defconfig # IMPORTANT ! Declare your kernel source defconfig file here.
 GCC_ROOTDIR=$(pwd)/gcc # IMPORTANT! Put your gcc directory here.
 GCC32_ROOTDIR=$(pwd)/gcc32 # IMPORTANT! Put your gcc32 directory here.
 export KBUILD_BUILD_USER=Synchroz # Change with your own name or else.
