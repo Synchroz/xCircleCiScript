@@ -64,9 +64,9 @@ function compile() {
 #    OBJCOPY=${GCC_ROOTDIR}/bin/llvm-objcopy \
     OBJDUMP=${GCC_ROOTDIR}/bin/aarch64-elf-objdump \
     OBJSIZE=${GCC_ROOTDIR}/bin/aarch64-elf-size \
-    READELF=${GCC_ROOTDIR}/bin/aarch64-elf-readelf \
-    STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip \
-    LD=${GCC_ROOTDIR}/bin/aarch64-elf-ld.lld
+#    READELF=${GCC_ROOTDIR}/bin/aarch64-elf-readelf \
+    STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip 
+#   LD=${GCC_ROOTDIR}/bin/aarch64-elf-ld.lld
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
