@@ -56,11 +56,11 @@ function compile() {
     CROSS_COMPILE_ARM32=${GCC32_ROOTDIR}/bin/arm-eabi- \
     AR=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-ar \
     AS=${GCC_ROOTDIR}/bin/aarch64-elf-as \
-    NM=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-nm \
-    RANLIB=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-ranlib \
+#    NM=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-nm \
+#    RANLIB=${GCC_ROOTDIR}/bin/aarch64-elf-gcc-ranlib \
 #    NM=${GCC_ROOTDIR}/bin/llvm-nm \
     CC=${GCC_ROOTDIR}/bin/aarch64-elf-gcc \
-    OBJCOPY=${GCC_ROOTDIR}/bin/aarch64-elf-objcopy \
+#    OBJCOPY=${GCC_ROOTDIR}/bin/aarch64-elf-objcopy \
 #    OBJCOPY=${GCC_ROOTDIR}/bin/llvm-objcopy \
     OBJDUMP=${GCC_ROOTDIR}/bin/aarch64-elf-objdump \
     OBJSIZE=${GCC_ROOTDIR}/bin/aarch64-elf-size \
