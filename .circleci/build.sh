@@ -72,15 +72,13 @@ function compile() {
 	finerr
 	exit 1
    fi
-    git clone --depth=1 https://github.com/Synchroz/AnyKernel3 AnyKernel
 	cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
 }
 
 # Push
 function push() {
-    cd AnyKernel
-    ZIP=$(echo *.zip)
-    curl -F document=@$ZIP "https://api.telegram.org/bot2030871213:AAEnZeoBtgl-jdsIaXfoGswrkKtCNQ0hK2U/sendDocument" \
+    cd out/arch/arm64/boot
+    curl -F document=@Image.gz-dtb "https://api.telegram.org/bot2030871213:AAEnZeoBtgl-jdsIaXfoGswrkKtCNQ0hK2U/sendDocument" \
         -F chat_id="-1001567409765" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
@@ -97,15 +95,9 @@ function finerr() {
     exit 1
 }
 
-# Zipping
-function zipping() {
-    cd AnyKernel || exit 1
-    zip -r9 ${KERNEL_NAME}-4,9-${DEVICE_CODENAME}-${DATE}-GCC13.zip *
-    cd ..
 }
 check
 compile
-zipping
 END=$(date +"%s")
 DIFF=$(($END - $START))
 push
