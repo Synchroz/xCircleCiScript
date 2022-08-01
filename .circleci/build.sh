@@ -95,7 +95,6 @@ function finerr() {
     exit 1
 }
 
-}
 check
 compile
 END=$(date +"%s")
