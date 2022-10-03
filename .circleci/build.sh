@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
-git clone --depth=1 https://github.com/Synchroz/Auguri-L-k4.9 santoni
+git clone --depth=1 https://github.com/Synchroz/msm4.9_santonikernel santoni
 git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 -b gcc-master gcc
 git clone --depth=1 https://github.com/mvaisakh/gcc-arm -b gcc-master gcc32
 
 # Main
-KERNEL_NAME=Auguri # IMPORTANT ! Declare your kernel name
+KERNEL_NAME=Core # IMPORTANT ! Declare your kernel name
 KERNEL_ROOTDIR=$(pwd)/santoni # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_CODENAME=santoni # IMPORTANT ! Declare your device codename
 DEVICE_DEFCONFIG=santoni_treble_defconfig # IMPORTANT ! Declare your kernel source defconfig file here.
@@ -14,7 +14,7 @@ GCC32_ROOTDIR=$(pwd)/gcc32 # IMPORTANT! Put your gcc32 directory here.
 export KBUILD_BUILD_USER=Synchroz # Change with your own name or else.
 export KBUILD_BUILD_HOST=Bloodedge # Change with your own hostname.
 GCC_VERSION="$("$GCC_ROOTDIR"/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')"
-LLD_VERSION="$("$GCC_ROOTDIR"/bin/aarch64-elf-ld.lld --version | head -n 1)"
+# LLD_VERSION="$("$GCC_ROOTDIR"/bin/aarch64-elf-ld.lld --version | head -n 1)"
 COMPILER_STRING="$GCC_VERSION with $LLD_VERSION"
 IMAGE=$(pwd)/santoni/out/arch/arm64/boot/Image.gz-dtb
 DATE=$(date +"%F-%S")
@@ -33,7 +33,7 @@ echo BUILDER HOSTNAME = ${KBUILD_BUILD_HOST}
 echo DEVICE_DEFCONFIG = ${DEVICE_DEFCONFIG}
 echo GCC_VERSION = $(${GCC_ROOTDIR}/bin/aarch64-elf-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
 echo GCC32_VERSION = $(${GCC32_ROOTDIR}//bin/arm-eabi-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
-echo LLD_VERSION = $(${GCC_ROOTDIR}/bin/ld.lld --version | head -n 1)
+# echo LLD_VERSION = $(${GCC_ROOTDIR}/bin/ld.lld --version | head -n 1)
 echo GCC_ROOTDIR = ${GCC_ROOTDIR}
 echo KERNEL_ROOTDIR = ${KERNEL_ROOTDIR}
 echo ================================================
@@ -65,8 +65,8 @@ function compile() {
     OBJDUMP=${GCC_ROOTDIR}/bin/aarch64-elf-objdump \
     OBJSIZE=${GCC_ROOTDIR}/bin/aarch64-elf-size \
     READELF=${GCC_ROOTDIR}/bin/aarch64-elf-readelf \
-    STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip \
-    LD=${GCC_ROOTDIR}/bin/aarch64-elf-ld.lld
+    STRIP=${GCC_ROOTDIR}/bin/aarch64-elf-strip 
+#    LD=${GCC_ROOTDIR}/bin/aarch64-elf-ld.lld
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
