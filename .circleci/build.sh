@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
-git clone --depth=1 https://github.com/Synchroz/Auguri-L-k4.9 santoni
+git clone --depth=1 https://github.com/Synchroz/msm4.9_santonikernel santoni
 git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 -b gcc-master gcc
 git clone --depth=1 https://github.com/mvaisakh/gcc-arm -b gcc-master gcc32
 
 # Main
-KERNEL_NAME=Auguri # IMPORTANT ! Declare your kernel name
+KERNEL_NAME=Core # IMPORTANT ! Declare your kernel name
 KERNEL_ROOTDIR=$(pwd)/santoni # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_CODENAME=santoni # IMPORTANT ! Declare your device codename
 DEVICE_DEFCONFIG=santoni_treble_defconfig # IMPORTANT ! Declare your kernel source defconfig file here.
