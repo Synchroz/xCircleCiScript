@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Downloading few Dependecies . . ."
 git clone --depth=1 https://github.com/Synchroz/msm4.9_santonikernel santoni
-git clone --depth=1 https://github.com/xyz-prjkt/xRageTC_build xRageTC # xRageTC set as Clang Default
+git clone --depth=1 https://github.com/dragonroad99/proton-clang-12 clang # clang set as Clang Default
 
 
 # Main
@@ -9,7 +9,7 @@ KERNEL_NAME=Core # IMPORTANT ! Declare your kernel name
 KERNEL_ROOTDIR=$(pwd)/santoni # IMPORTANT ! Fill with your kernel source root directory.
 DEVICE_CODENAME=santoni # IMPORTANT ! Declare your device codename
 DEVICE_DEFCONFIG=santoni_treble_defconfig # IMPORTANT ! Declare your kernel source defconfig file here.
-CLANG_ROOTDIR=$(pwd)/xRageTC # IMPORTANT! Put your clang directory here.
+CLANG_ROOTDIR=$(pwd)/clang # IMPORTANT! Put your clang directory here.
 export KBUILD_BUILD_USER=Synchroz # Change with your own name or else.
 export KBUILD_BUILD_HOST=Bloodedge # Change with your own hostname.
 CLANG_VER="$("$CLANG_ROOTDIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
